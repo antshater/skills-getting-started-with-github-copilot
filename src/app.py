@@ -21,6 +21,42 @@ app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
 
 # In-memory activity database
 activities = {
+    "Basketball Team": {
+        "description": "Compete in basketball games and improve athletic skills",
+        "schedule": "Mondays and Wednesdays, 4:00 PM - 5:30 PM",
+        "max_participants": 15,
+        "participants": []
+    },
+    "Soccer Club": {
+        "description": "Practice soccer techniques and participate in matches",
+        "schedule": "Tuesdays and Thursdays, 3:00 PM - 4:30 PM",
+        "max_participants": 20,
+        "participants": []
+    },
+    "Art Club": {
+        "description": "Explore various art forms and create creative projects",
+        "schedule": "Fridays, 2:00 PM - 4:00 PM",
+        "max_participants": 10,
+        "participants": []
+    },
+    "Drama Club": {
+        "description": "Act in plays and develop theatrical skills",
+        "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 12,
+        "participants": []
+    },
+    "Debate Club": {
+        "description": "Engage in debates and improve critical thinking",
+        "schedule": "Thursdays, 4:00 PM - 5:30 PM",
+        "max_participants": 8,
+        "participants": []
+    },
+    "Science Club": {
+        "description": "Conduct experiments and learn about scientific concepts",
+        "schedule": "Mondays, 3:00 PM - 4:30 PM",
+        "max_participants": 15,
+        "participants": []
+    },
     "Chess Club": {
         "description": "Learn strategies and compete in chess tournaments",
         "schedule": "Fridays, 3:30 PM - 5:00 PM",
@@ -61,6 +97,10 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Get the specific activity
     activity = activities[activity_name]
+
+    # Validate student is not already signed up
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Student already signed up")
 
     # Add student
     activity["participants"].append(email)
